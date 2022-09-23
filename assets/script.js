@@ -4,7 +4,7 @@ var nextBtn = document.getElementById('next')
 var timerEl = document.getElementById('timer')
 
 var index = 0
-var timeLeft = 5
+var timeLeft = 25
 
 var questionsList = [
     {
@@ -83,22 +83,30 @@ function renderQuestion() {
 }
 
 function submitAnswer() {
+    renderQuestion()
+    // loops over everything twice because function is called twice
+    index++
     choice = ""
     var rightWrong = document.createElement('p')
-    rightWrong.innerText = "WOWOWOW"
     questionsEl.appendChild(rightWrong)
+    // rightWrong.innerHTML = "Correct"
+    console.log(questionsList[index].correct)
+    if(questionsList[index].correct === "answer 1.1") { // how to get values to match from inside each array
+        // var rightWrong = document.createElement('p')
+        rightWrong.innerHTML = "Correct"
+        // questionsEl.appendChild(rightWrong)
+    } else {
+        rightWrong.innerHTML = "Incorrect"
+    }
+    
+    
     
 }
 
 nextBtn.addEventListener('click', function () {
     renderQuestion()
-    index++
+    // index++
 }) 
 
-questionsEl.addEventListener('click', function () {
-    //if an li is clicked, add note on page that says correct or incorrect
-    renderQuestion()
-    submitAnswer()
-    index++
-})
+
 
