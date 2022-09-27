@@ -36,9 +36,10 @@ h1 {
 #description {
     width: 800px;
     line-height: 40px;
+    text-align: center;
 }
 
-.options, button {
+.options, button, #submitInitials {
     background-color: var(--purple);
     border: none;
     padding: 10px;
@@ -65,6 +66,13 @@ button:hover {
 
 }
 
+#submitInitials:hover {
+    background-color: var(--darkPurple);
+    color: var(--orange);
+    cursor: pointer;
+
+}
+
 form {
     display: none;
 }
@@ -72,4 +80,14 @@ form {
 
 p {
     color: black;
+}
+
+.inits {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#enterInitials, #submitInitials {
+    margin: 25px 8px ;
 }
