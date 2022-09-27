@@ -11,7 +11,7 @@ header {
     justify-content: space-between;
 }
 
-li, button {
+.options, button {
     background-color: var(--purple);
     border: none;
     padding: 10px;
@@ -24,7 +24,7 @@ li, button {
     justify-content: center;
 }
 
-li:hover {
+.options:hover {
     background-color: var(--darkPurple);
     color: var(--orange);
     cursor: pointer;
@@ -37,6 +37,11 @@ button:hover {
     cursor: pointer;
 
 }
+
+form {
+    display: none;
+}
+
 
 p {
     color: black;

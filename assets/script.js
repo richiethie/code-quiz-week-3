@@ -1,13 +1,16 @@
 var h1 = document.querySelector('h1')
 var questionsEl = document.getElementById('questions')
+var scores = document.getElementById('scores')
 var startBtn = document.getElementById('next')
 var timerEl = document.getElementById('timer')
 var h3 = document.getElementById('description')
 var form = document.querySelector('form')
 var correctIncorrect = document.getElementById('correctIncorrect')
+var input = document.getElementById('enterInitials')
+var submit = document.getElementById('submitInitials')
 
 var index = 0
-var timeLeft = 10
+var timeLeft = 120
 var highScores = []
 var newScore = {
     score: 0,
@@ -92,6 +95,7 @@ function getQuestion() {
     h1.textContent = questionsList[index].title
     for (var i = 0; i < questionsList[index].choices.length; i++) {
         var li = document.createElement('li')
+        li.classList.add('options')
         var choice = questionsList[index].choices[i]
         li.innerText = choice
         li.addEventListener('click', questionAnswered)
@@ -101,21 +105,23 @@ function getQuestion() {
 }
 
 function questionAnswered(event) {
-    console.log(questionsList[index].correct)
     var buttonElement = event.target
-    index++
-    console.log(buttonElement.innerHTML)
-    if (index === questionsList.length) {
-        endQuiz()
-    } else {
-        getQuestion()
-    }
-    if (questionsList[index].correct === buttonElement.innerHTML) { // change if statement??
-        correctIncorrect.innerHTML = "Correct" //not displaying correct??
+    
+    if (questionsList[index].correct === buttonElement.innerHTML) {
+        correctIncorrect.innerHTML = "Correct"
     } else {
         correctIncorrect.innerHTML = "Incorrect"
         timeLeft = timeLeft - 10
     }    
+    index++
+    if (index === questionsList.length) {
+        
+        endQuiz()
+    } else {
+        
+        getQuestion()
+    }
+    
     
     
     
@@ -127,31 +133,40 @@ function endQuiz() {
     h1.textContent = "All done!"
     var finalScore = timeLeft
     h3.textContent = "Your final score is: " + finalScore
-    var input = document.createElement('input')
-    input.type = 'text'
-    input.className = 'enterInitials'
-    var submit = document.createElement('input')
-    submit.type = 'submit'
-    submit.className = 'submitInitials'
-    form.appendChild(input)
-    form.appendChild(submit)
+    form.style.display = "inline-flex"
+    input.style.display = "flex"
+    submit.style.display = "flex"
     submit.addEventListener('click', highScore)
     console.log(finalScore)
 
 }
 
 
-function highScore (event) {
+function highScore (event) { // fix local storage, need to target text of input and display
     event.preventDefault()
+    console.log(event.target.innerHTML)
     h1.textContent = "Highscores"
     h3.textContent = ""
     form.innerHTML = ""
+    // console.log(initialsScore)
     highScores.push(newScore)
-    localStorage.setItem('highScores', JSON.stringify(highScores))
-    var getHighScores = JSON.parse(localStorage.getItem('highScores'))
-    getHighScores.inner
+    localStorage.setItem('initials', input.value)
+    localStorage.setItem('finalTime', timeLeft)
+    var initials = localStorage.getItem('initials', input.value)
+    var finalTime = localStorage.getItem('finalTime', timeLeft)
+    for (var i = 0; i < highScores.length; i++) {
+        var newScore = highScores[i];
+        var li = document.createElement('li')
+        li.classList.add('highScores')
+        li.textContent = initials + " - " + finalTime
+        scores.appendChild(li)
+    }
 
-
+    // var highScores = []
+    // var newScore = {
+    //     score: 0,
+    //     user: 'RT'
+    // }
     
 }
 // use local storage to set highscores value 
