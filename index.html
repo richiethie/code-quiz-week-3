@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <a>
+        <a id="highScores">
             View Highscores
         </a>
         <div id="timer">
@@ -17,19 +17,28 @@
         </div>
     </header>
     <main>
-    <h1>Coding Quiz Challenge</h1>
-    <h3 id="description">You have 75 seconds to complete this quiz. If you select an incorrect answer, 10 seconds will be deducted from your time remaining. Click 'Start Quiz' to begin.</h3>
-    <ul id="questions"></ul>
-    <ul id="scores"></ul>
-    <p id="correctIncorrect"></p>
-    <form id="submit">
-        <p>Enter Initials: </p>
-        <input type="text" id="enterInitials" name="enterInitials">
-        <input type="submit" id="submitInitials" name="submitInitials">
-    </form>
-    <button id="next">
-        Start Quiz
-    </button>
+        <h1>Coding Quiz Challenge</h1>
+        <h3 id="description">You have 75 seconds to complete this quiz. If you select an incorrect answer, 10 seconds will be deducted from your time remaining. Click 'Start Quiz' to begin.</h3>
+        <button id="next">
+            Start Quiz
+        </button>
+        <ul id="questions"></ul>
+        <ul id="scores"></ul>
+        <p id="correctIncorrect"></p>
+        <form id="submit">
+            <p>Enter Initials: </p>
+            <input type="text" id="enterInitials" name="enterInitials">
+            <input type="submit" id="submitInitials" name="submitInitials">
+        </form>
+        
+        <form id="highScoreButtons">
+            <button id="back">
+                Go back
+            </button>
+            <button id="clear">
+                Clear Scores
+            </button>
+        </form>
     </main>
 
 

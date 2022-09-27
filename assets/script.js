@@ -4,62 +4,65 @@ var scores = document.getElementById('scores')
 var startBtn = document.getElementById('next')
 var timerEl = document.getElementById('timer')
 var h3 = document.getElementById('description')
-var form = document.querySelector('form')
+var submitForm = document.getElementById('submit')
 var correctIncorrect = document.getElementById('correctIncorrect')
 var input = document.getElementById('enterInitials')
 var submit = document.getElementById('submitInitials')
+var highScoresEl = document.getElementById('highScores')
+var highScoreForm = document.getElementById('highScoreButtons')
+var clear = document.getElementById('clear')
+var back = document.getElementById('back')
 
 var index = 0
 var timeLeft = 120
-var highScores = []
-var newScore = {
-    score: 0,
-    user: 'RT'
-}
+// var highScores = []
+
 
 var questionsList = [
     {
-        title: "Sample 1",
-        correct: "answer 1.1",
+        title: "Inside which HTML element do we put the JavaScript?",
+        correct: "<script>",
         choices: [
-            "answer 1.1",
-            "answer 2.1",
-            "answer 3.1",
-            "answer 4.1"
+            "<js>",
+            "<script>",
+            "<javascript>",
+            "<scripting>"
         ]
 
     }, 
     {
-        title: "Sample 2",
-        correct: "answer 1.2",
+        title: "Where is the best place to insert a JavaScript?",
+        correct: "The <body> section",
         choices: [
-            "answer 1.2",
-            "answer 2.2",
-            "answer 3.2",
-            "answer 4.2"
+            "The <head> section",
+            "Both the <head> and the <body> section",
+            "The <body> section",
+            "None of the above"
         ]
     },
     {
-        title: "Sample 3",
-        correct: "answer 1.3",
+        title: "How do you call a function named 'myFunction'?",
+        correct: "myFunction()",
         choices: [
-            "answer 1.3",
-            "answer 2.3",
-            "answer 3.3",
-            "answer 4.3"
+            "call function myFunction()",
+            "call myFunction()",
+            "function.call myFunction()",
+            "myFunction()"
         ]
     },
     {
-        title: "Sample 4",
-        correct: "answer 1.4",
+        title: "How to write an IF statement in JavaScript?",
+        correct: "if (i === 5) {}",
         choices: [
-            "answer 1.4",
-            "answer 2.4",
-            "answer 3.4",
-            "answer 4.4"
+            "if i === 5 then {}",
+            "if i = 5 then {}",
+            "if (i === 5) {}",
+            "if i = 5 {}"
         ]
     }
 ]
+
+// highScore()
 
 function setTime() {
     var timerInterval = setInterval(function () {
@@ -107,7 +110,7 @@ function getQuestion() {
 function questionAnswered(event) {
     var buttonElement = event.target
     
-    if (questionsList[index].correct === buttonElement.innerHTML) {
+    if (questionsList[index].correct === buttonElement.innerText) {
         correctIncorrect.innerHTML = "Correct"
     } else {
         correctIncorrect.innerHTML = "Incorrect"
@@ -131,48 +134,72 @@ function endQuiz() {
     questionsEl.innerText = ""
     correctIncorrect.innerHTML = ""
     h1.textContent = "All done!"
-    var finalScore = timeLeft
+    var finalScore = timeLeft - 1
     h3.textContent = "Your final score is: " + finalScore
-    form.style.display = "inline-flex"
+    submitForm.style.display = "inline-flex"
     input.style.display = "flex"
     submit.style.display = "flex"
     submit.addEventListener('click', highScore)
-    console.log(finalScore)
 
 }
 
 
 function highScore (event) { // fix local storage, need to target text of input and display
     event.preventDefault()
-    console.log(event.target.innerHTML)
     h1.textContent = "Highscores"
     h3.textContent = ""
-    form.innerHTML = ""
-    // console.log(initialsScore)
+    submitForm.innerHTML = ""
+    var initials = input.value
+    var highScores = JSON.parse(localStorage.getItem('highScores')) || []
+    var newScore = {
+        score: timeLeft,
+        user: initials
+    }
     highScores.push(newScore)
-    localStorage.setItem('initials', input.value)
-    localStorage.setItem('finalTime', timeLeft)
-    var initials = localStorage.getItem('initials', input.value)
-    var finalTime = localStorage.getItem('finalTime', timeLeft)
+    localStorage.setItem('highScores', JSON.stringify(highScores))
     for (var i = 0; i < highScores.length; i++) {
-        var newScore = highScores[i];
+        var score = highScores[i];
         var li = document.createElement('li')
         li.classList.add('highScores')
-        li.textContent = initials + " - " + finalTime
+        li.textContent = score.user + " - " + score.score
         scores.appendChild(li)
     }
-
-    // var highScores = []
-    // var newScore = {
-    //     score: 0,
-    //     user: 'RT'
-    // }
-    
+    highScoreForm.style.display = "flex"
 }
-// use local storage to set highscores value 
-// get highscores valur from localStorage andattach to html element
 
-    startBtn.addEventListener('click', function () {
+function showHighScores () {
+    h1.textContent = "Highscores"
+    h3.textContent = ""
+    submitForm.innerHTML = ""
+    startBtn.remove()
+    var highScores = JSON.parse(localStorage.getItem('highScores')) || []
+    for (var i = 0; i < highScores.length; i++) {
+        var score = highScores[i];
+        var li = document.createElement('li')
+        li.classList.add('highScores')
+        li.textContent = score.user + " - " + score.score
+        scores.appendChild(li)
+    }
+    highScoreForm.style.display = "flex"
+}
+
+function clearHighScores() {
+    localStorage.removeItem('highScores')
+    location.reload()
+}
+
+function goBack() {
+    location.reload()
+}
+
+back.addEventListener('click', goBack)
+
+clear.addEventListener('click', clearHighScores)
+
+highScoresEl.addEventListener('click', showHighScores)
+
+
+startBtn.addEventListener('click', function () {
     startQuiz()
 }) 
 
