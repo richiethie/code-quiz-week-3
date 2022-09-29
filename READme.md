@@ -33,3 +33,9 @@ The user now has two final options. The first option is they can click on the bu
 ## Credits
 
 I would like to give some credit to my Tutor that helped me with this project. His name is Blake Davis. He helped me a lot with setting up a good game plan by pseudocoding with me, and also gave me great advice on how to use the localStorage to store all of the highscores.
+
+## Links
+
+Link to live website: https://richiethie.github.io/code-quiz-week-3/
+
+Link to GitHub Repository: https://github.com/richiethie/code-quiz-week-3
